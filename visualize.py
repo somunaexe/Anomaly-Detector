@@ -14,7 +14,7 @@ class RealTimeVisualizer:
 
     def update(self, data_point, is_anomaly):
         try:
-            # Validate the data point before adding
+            # Validate the data points data type before adding
             if not isinstance(data_point, (int, float)):
                 raise ValueError("Data point must be a number.")
             
@@ -29,7 +29,8 @@ class RealTimeVisualizer:
             else:
                 self.anomalies_data.append(None) # Add None to the anomalous data list to ensure the regular and anomalous data list stay aligned
 
-            self.anomalies.set_xdata(range(len(self.anomalies_data)))
+            # Update the anomalies plot with the new data point
+            self.anomalies.set_xdata(range(len(self.anomalies_data))) 
             self.anomalies.set_ydata(self.anomalies_data)
 
             # Adjust the axes to accomodate more data points
@@ -38,5 +39,6 @@ class RealTimeVisualizer:
 
             plt.draw() # Re-draw the plot to show more points
             plt.pause(0.01) # Pause for 0.01 seconds to allow for GUI events
+
         except Exception as e:
             print(f"\nError in handling visualizer: {e}")
